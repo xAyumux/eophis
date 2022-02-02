@@ -1,2 +1,5 @@
 # ローカル設定の影響
 .vscode/.history
+# 認証jsonを公開リポジトリに上げないように
+backend/key/
+
