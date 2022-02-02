@@ -36,3 +36,12 @@
 - 音声の受け取り
 - 正否 json の返し
 - データベースにテキストか音声を保存
+
+### 音声ファイルの扱い
+
+- NoSQL (Firebase Realtime Database)に登録出来た場合  
+  そのままデータベースに登録する
+
+- NoSQL (Firebase Realtime Database)に登録出来なかった場合  
+  フォルダにファイルを保存  
+  データベースにはパスを保存
