@@ -1,6 +1,6 @@
 import os
-import io
 from google.cloud import speech
+import concat
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './key/boxwood-magnet-340107-ad5f6a210636.json'
 
 def speech_recognition(binary_file):
@@ -26,19 +26,23 @@ def speech_recognition(binary_file):
     return response.results[0].alternatives[0].transcript
 
 
-def speaker_recognition(binary_file):
+def speaker_recognition(binary_file_lists):
     # Instantiates a client
     client = speech.SpeechClient()
+    ###音声をconcat
+    concat.join_waves(binary_file_lists)
     ### 音声データを指定
-    content = binary_file
-
+    concat_binary = "./tmp/concat.wav"
+    with open(concat_binary, "rb") as audio_file:
+        content = audio_file.read()
+    #content = binary_file
     ### RecognitionAudioにデータを渡す
     audio = speech.RecognitionAudio(content=content)
 
     diarization_config = speech.SpeakerDiarizationConfig(
     enable_speaker_diarization=True,
     min_speaker_count=1,
-    max_speaker_count=3,
+    max_speaker_count=10,
     )
 
     config = speech.RecognitionConfig(
@@ -48,12 +52,8 @@ def speaker_recognition(binary_file):
     )
 
     ### 音声を抽出
-    response = client.recognize(config=config, audio=audio)
-
-    ### 抽出結果をprintで表示
- 
+    response = client.recognize(config=config, audio=audio)    
     result = response.results[-1]
-
     words_info = result.alternatives[0].words
     speaker_tag_set = set()
     # Printing out the output:
