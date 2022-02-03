@@ -3,6 +3,7 @@ import { createRouter,createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 import Select from '../views/Select.vue'
 import key from '../views/Key.vue'
+import Audio from '../components/Audio.vue'
 
 const routes = [
   
@@ -28,6 +29,11 @@ const routes = [
     path: '/key',
     name: 'Key',
     component: key
+  },
+  {
+    path: '/Audio',
+    name: 'audio',
+    component: Audio
   }
 ]
 

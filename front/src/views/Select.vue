@@ -1,49 +1,47 @@
 <template>
     <div class="select">
-        <h1>音声の録音を行います。</h1>
-        <p>使用する音声ファイルを選択してください</p>
+        <h2>音声の録音を行います。<br>下の音声登録ボタンを押すとパソコンのマイクにアクセスして登録します。</h2>
     </div>
     <div>
-        <!--accept="audio/* 音声メディア対応"-->
-        <input id="input-file" type="file" v-on:change="file" accept="txt">
+        <button v-on:click="audio">
+            音声登録
+        </button>
     </div>
-    <p>{{test}}</p>
-    <div>
-        <button v-on:click="change">音声録音</button>
-        
-        <button v-show="isActive">
+    <div v-show="flag">
+        <Audio ref="audio" />
+    </div>
+    <br>
+    <br>
+    <button v-show="isActive">
             <router-link to="/">
             戻る
             </router-link>
         </button>
-    </div>
 </template>
 
-
 <script>
+import Audio from '../components/Audio.vue' 
+
 export default {
-    
+    components:{
+        Audio
+    },
     data:function(){
         return {
-            test:"",
-            isActive:false
+            //非表示解除用トリガー
+            isActive:false,
+            flag: false
         }
     },
     methods: {
-        file:function(e) {
-            let filedata = e.target.files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(filedata)
-            //console.log(filedata)
-            this.input_data(filedata.name)
-            //this.createImage(file)
-        },
-        input_data:function(data){
-            this.test = data
-        },
-        change:function() {
+
+        //audioコンポーネントを起動
+        audio:function(){
+            //録音の処理.recording関数
+            this.$refs.audio.recording()
+            this.flag = true
             this.isActive = true
-        }
+        },
     }
 }
 

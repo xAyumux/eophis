@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <span>
-      <key/>
+      <Key />
     </span>
   </div>
 </template>
