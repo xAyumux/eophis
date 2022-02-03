@@ -1,5 +1,18 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <span>
+      <key/>
+    </span>
   </div>
 </template>
+
+<script>
+import Key from '../views/Key.vue'
+export default {
+  name: 'Home',
+  components: {
+    Key
+  }
+  
+}
+</script>
