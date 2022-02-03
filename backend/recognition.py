@@ -7,7 +7,6 @@ def speech_recognition(binary_file):
     # Instantiates a client
     client = speech.SpeechClient()
     ### 音声データを指定
-    speech_file = './output.wav'
     content = binary_file
 
     ### RecognitionAudioにデータを渡す
@@ -22,15 +21,15 @@ def speech_recognition(binary_file):
     response = client.recognize(config=config, audio=audio)
 
     ### 抽出結果をprintで表示
-    for result in response.results:
-        print("{}".format(result.alternatives[0].transcript))
+    #for result in response.results:
+    #    print("{}".format(result.alternatives[0].transcript))
+    return response.results[0].alternatives[0].transcript
 
 
 def speaker_recognition(binary_file):
     # Instantiates a client
     client = speech.SpeechClient()
     ### 音声データを指定
-    speech_file = './output.wav'
     content = binary_file
 
     ### RecognitionAudioにデータを渡す
@@ -56,9 +55,16 @@ def speaker_recognition(binary_file):
     result = response.results[-1]
 
     words_info = result.alternatives[0].words
-
+    speaker_tag_set = set()
     # Printing out the output:
     for word_info in words_info:
+        """
         print(
             u"word: '{}', speaker_tag: {}".format(word_info.word, word_info.speaker_tag)
         )
+        """
+        speaker_tag_set.add(word_info.speaker_tag)
+    if len(speaker_tag_set) == 1:
+        return True
+    else:
+        return False
